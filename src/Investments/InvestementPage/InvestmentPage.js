@@ -7,12 +7,11 @@ import Box from "@mui/material/Box";
 import { Outlet, useNavigate } from "react-router-dom";
 import { TabPanelUnstyled } from "@mui/base";
 
-export function InvestmentPage() {
+export function InvestmentPage(props) {
 	const navigate = useNavigate();
 	const [value, setValue] = React.useState(0);
 
 	const handleChange = () => {};
-
 	const tabClicked = (val) => {
 		switch (val) {
 			case 0:

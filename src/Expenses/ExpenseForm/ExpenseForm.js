@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useState } from "react";
 
-export function ExpenseForm() {
+export function ExpenseForm(props) {
 	const categories = [
 		"food",
 		"travel",
@@ -29,6 +29,12 @@ export function ExpenseForm() {
 
 	const saveExpense = () => {
 		console.log(amount, title, expDate, category);
+		props.addExpense({
+			amount: amount,
+			title: title,
+			expDate: expDate,
+			category: category,
+		});
 	};
 	return (
 		<div

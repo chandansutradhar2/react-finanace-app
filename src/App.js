@@ -11,6 +11,7 @@ import { MutualFund } from "./Investments/MutualFunds/MutualFund";
 import { DebtFund } from "./Investments/DebtFunds/DebtFund";
 import { Equities } from "./Investments/Equities/Equities";
 import { LiquidFund } from "./Investments/LiquidFunds/LiquidFund";
+import { createContext, useState } from "react";
 
 const THEME = createTheme({
 	typography: {
@@ -22,24 +23,43 @@ const THEME = createTheme({
 	},
 });
 
+export const ExpensesContext = createContext();
+
 function App() {
+	const [expense, setExpense] = useState({
+		amount: 0,
+		title: "",
+		expDate: "dd/mm/yyyy",
+		category: "",
+	});
+
+	const addExpense = (exp) => {
+		console.log("expense recieved in App.js", exp);
+		setExpense(exp);
+	};
+
 	return (
-		<ThemeProvider theme={THEME}>
-			<BrowserRouter>
-				<HeaderBar />
-				<Routes>
-					<Route path="/" element={<ExpensePage />} />
-					<Route path="/expense" element={<ExpensePage />} />
-					<Route path="/investment" element={<InvestmentPage />}>
-						<Route path="mutualfund" element={<MutualFund />} />
-						<Route path="debtfund" element={<DebtFund />} />
-						<Route path="liquidfund" element={<LiquidFund />} />
-						<Route path="equities" element={<Equities />} />
-					</Route>
-					<Route path="/learning" element={<LearningPage />} />
-				</Routes>
-			</BrowserRouter>
-		</ThemeProvider>
+		<ExpensesContext.Provider value={expense}>
+			<ThemeProvider theme={THEME}>
+				<BrowserRouter>
+					<HeaderBar />
+					<Routes>
+						<Route path="/" element={<ExpensePage />} />
+						<Route
+							path="/expense"
+							element={<ExpensePage addExpense={addExpense} />}
+						/>
+						<Route path="/investment" element={<InvestmentPage />}>
+							<Route path="mutualfund" element={<MutualFund />} />
+							<Route path="debtfund" element={<DebtFund />} />
+							<Route path="liquidfund" element={<LiquidFund />} />
+							<Route path="equities" element={<Equities />} />
+						</Route>
+						<Route path="/learning" element={<LearningPage />} />
+					</Routes>
+				</BrowserRouter>
+			</ThemeProvider>
+		</ExpensesContext.Provider>
 	);
 }
 

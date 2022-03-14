@@ -1,3 +1,12 @@
+import { useContext } from "react";
+import { ExpensesContext } from "../../App";
+
 export function LiquidFund() {
-	return <h3>Liquid Fund View</h3>;
+	const expense = useContext(ExpensesContext);
+	return (
+		<>
+			<h3>Liquid Fund</h3>
+			<div>{JSON.stringify(expense)}</div>
+		</>
+	);
 }
