@@ -24,6 +24,7 @@ const THEME = createTheme({
 });
 
 export const ExpensesContext = createContext();
+export const UserContext = createContext();
 
 function App() {
 	const [expense, setExpense] = useState({
@@ -33,6 +34,11 @@ function App() {
 		category: "",
 	});
 
+	const [user, setUser] = useState({
+		fullName: "chandan",
+		email: "",
+		mobileNo: "",
+	});
 	const addExpense = (exp) => {
 		console.log("expense recieved in App.js", exp);
 		setExpense(exp);
@@ -41,23 +47,25 @@ function App() {
 	return (
 		<ExpensesContext.Provider value={expense}>
 			<ThemeProvider theme={THEME}>
-				<BrowserRouter>
-					<HeaderBar />
-					<Routes>
-						<Route path="/" element={<ExpensePage />} />
-						<Route
-							path="/expense"
-							element={<ExpensePage addExpense={addExpense} />}
-						/>
-						<Route path="/investment" element={<InvestmentPage />}>
-							<Route path="mutualfund" element={<MutualFund />} />
-							<Route path="debtfund" element={<DebtFund />} />
-							<Route path="liquidfund" element={<LiquidFund />} />
-							<Route path="equities" element={<Equities />} />
-						</Route>
-						<Route path="/learning" element={<LearningPage />} />
-					</Routes>
-				</BrowserRouter>
+				<UserContext.Provider value={user}>
+					<BrowserRouter>
+						<HeaderBar />
+						<Routes>
+							<Route path="/" element={<ExpensePage />} />
+							<Route
+								path="/expense"
+								element={<ExpensePage addExpense={addExpense} />}
+							/>
+							<Route path="/investment" element={<InvestmentPage />}>
+								<Route path="mutualfund" element={<MutualFund />} />
+								<Route path="debtfund" element={<DebtFund />} />
+								<Route path="liquidfund" element={<LiquidFund />} />
+								<Route path="equities" element={<Equities />} />
+							</Route>
+							<Route path="/learning" element={<LearningPage />} />
+						</Routes>
+					</BrowserRouter>
+				</UserContext.Provider>
 			</ThemeProvider>
 		</ExpensesContext.Provider>
 	);
