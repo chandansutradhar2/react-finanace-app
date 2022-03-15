@@ -11,7 +11,8 @@ import { MutualFund } from "./Investments/MutualFunds/MutualFund";
 import { DebtFund } from "./Investments/DebtFunds/DebtFund";
 import { Equities } from "./Investments/Equities/Equities";
 import { LiquidFund } from "./Investments/LiquidFunds/LiquidFund";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const THEME = createTheme({
 	typography: {
@@ -27,14 +28,21 @@ export const ExpensesContext = createContext();
 export const UserContext = createContext();
 
 function App() {
-	// const [expense, setExpense] = useState({
-	// 	amount: 0,
-	// 	title: "",
-	// 	expDate: "dd/mm/yyyy",
-	// 	category: "",
-	// });
-
 	const [expenses, setExpenses] = useState([]);
+
+	//todo logic to connect to server and fetch expenses
+	useEffect(() => {
+		//block of code that will execute only once in lifetime of the app
+		axios
+			.get("http://localhost:8000/user/expenses")
+			.then((res) => {
+				console.log(res.data);
+				setExpenses(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 
 	const [user, setUser] = useState({
 		fullName: "chandan",
