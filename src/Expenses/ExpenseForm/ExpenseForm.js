@@ -79,7 +79,11 @@ export function ExpenseForm(props) {
 								onChange={handleChange}
 							>
 								{categories.map((ele) => {
-									return <MenuItem value={ele}>{ele}</MenuItem>;
+									return (
+										<MenuItem key={ele} value={ele}>
+											{ele}
+										</MenuItem>
+									);
 								})}
 							</Select>
 						</FormControl>

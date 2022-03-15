@@ -6,7 +6,7 @@ export function LearningPage() {
 	return (
 		<>
 			<h4>Welcome {user.fullName} Learning View</h4>
-			CHanging Value{(user.email = "chandansutradhar2@gmail.com")}
+			{/* NOT RECOMMENDED: Changing Value{(user.email = "chandansutradhar2@gmail.com")} */}
 		</>
 	);
 }

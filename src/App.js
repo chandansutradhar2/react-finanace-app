@@ -27,12 +27,14 @@ export const ExpensesContext = createContext();
 export const UserContext = createContext();
 
 function App() {
-	const [expense, setExpense] = useState({
-		amount: 0,
-		title: "",
-		expDate: "dd/mm/yyyy",
-		category: "",
-	});
+	// const [expense, setExpense] = useState({
+	// 	amount: 0,
+	// 	title: "",
+	// 	expDate: "dd/mm/yyyy",
+	// 	category: "",
+	// });
+
+	const [expenses, setExpenses] = useState([]);
 
 	const [user, setUser] = useState({
 		fullName: "chandan",
@@ -40,18 +42,25 @@ function App() {
 		mobileNo: "",
 	});
 	const addExpense = (exp) => {
-		console.log("expense recieved in App.js", exp);
-		setExpense(exp);
+		//step 1 for updating state with array of objects
+		const expensesCopy = expenses.slice();
+		//step 2: add to copy of array
+		expensesCopy.push(exp);
+		//step3: update the arraycopy with state
+		setExpenses(expensesCopy);
 	};
 
 	return (
-		<ExpensesContext.Provider value={expense}>
+		<ExpensesContext.Provider value={expenses}>
 			<ThemeProvider theme={THEME}>
 				<UserContext.Provider value={user}>
 					<BrowserRouter>
 						<HeaderBar />
 						<Routes>
-							<Route path="/" element={<ExpensePage />} />
+							<Route
+								path="/"
+								element={<ExpensePage addExpense={addExpense} />}
+							/>
 							<Route
 								path="/expense"
 								element={<ExpensePage addExpense={addExpense} />}
